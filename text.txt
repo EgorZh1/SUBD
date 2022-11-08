@@ -1,0 +1,102 @@
+1) Functional requirements for the project:
+
+      User:
+        Authorization
+        verification (user data)
+        CRUD operations (in relation to the user)
+
+      Role system:
+        administrator
+        manager
+        user
+
+      Products:
+        CRUD operations (in relation to products)
+        Additional operations:
+          purchase of products
+          sale of products
+          status change of product
+      
+      Category:
+        Adding category for products
+      
+      Suppliers:
+        Adding suppliers for products
+      
+      Rating:
+        Rating the user (manager)
+      
+      Tags:
+        Product tag(Best Selling, Best Price...)
+      
+                    
+      Payment details:
+        CRUD operations (in relation to the payment details)
+
+2) Essences:
+    User
+      id            (integer)
+      role_id       (integer)
+      status_id     (integer)
+      name          (varchar 256)
+      surname       (varchar 256)
+      email         (varchar 256)
+      password      (varchar 32)
+      address       (varchar 256)
+      dt_created    (timestamp) date of user account creation 
+      dt_updated    (timestamp) date of user account update
+   __________________________________________________________________________________________
+    User Role (defines which role does user have (common user/manager/admin))
+      id           (integer)
+      role_name    (varchar 256)
+   __________________________________________________________________________________________
+    User status (defines which status does user have (active/blocked))
+      id           (integer)
+      status_name    (varchar 256)
+   __________________________________________________________________________________________
+    Product (aircrafts sellable and purchased by users)
+      id                (integer)
+      seller_id         (integer)
+      category_id       (integer)
+      supplier_id       (integer)
+      status_id         (integer)
+      product_name      (varchar 256)
+      product_price     (numeric)
+      dt_created        (timestamp)
+      dt_updated        (timestamp)
+      product_description (varchar 4096)
+   __________________________________________________________________________________________
+    Product Category (category of product (Watermelon/Melon/...))
+      id                      (integer)
+      p_category_name         (varchar 256)
+      p_category_description  (varchar 256)
+   __________________________________________________________________________________________    
+    Product Supplier (company which create fruits)
+      id                      (integer)
+      p_supplier_name         (varchar 256)
+      p_supplier_location     (varchar 256)
+      p_supplier_url          (varchar 4096)
+   __________________________________________________________________________________________
+    Status (status of product(new, used))
+      id               (integer)
+      p_status_name    (varchar 256)
+   __________________________________________________________________________________________
+    Order (an order of product (many orders can be related to one product))
+      id                   (integer)
+      buyer_id             (integer)
+      product_id           (integer)
+      order_description    (varchar 256)
+      dt_created           (timestamp)
+      dt_updated           (timestamp)
+   __________________________________________________________________________________________
+    Tags (tag of product (best sell/most viewed/...))
+      id            (integer)
+      p_tag_name    (varchar 256)
+   __________________________________________________________________________________________
+    Payment details (defines )
+      id            (integer)
+      product_id    (integer)
+      tag_id        (integer)
+   __________________________________________________________________________________________
+      
+3) Concept Model:
