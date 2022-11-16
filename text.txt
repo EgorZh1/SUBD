@@ -91,7 +91,7 @@
    __________________________________________________________________________________________
     Tags (tag of product (best sell/most viewed/...))
       id            (integer)
-      p_tag_name    (varchar 256)
+      p_tag_name    (varchar 64)
    __________________________________________________________________________________________
     Payment details (defines payment details )
       id            (integer)
