@@ -59,11 +59,10 @@
    ------------------------------------------------------------------------------------------------------
     User status (defines which status does user have (active/blocked))
       id           (pk)
-      role_name    (varchar 32)
+      status_name    (varchar 32)
    ------------------------------------------------------------------------------------------------------
     Product (aircrafts sellable and purchased by users)
       id                (integer)
-      seller_id         (integer)
       category_id       (integer)
       supplier_id       (integer)
       status_id         (integer)
@@ -104,6 +103,12 @@
       id            (integer)
       product_id    (integer)
       tag_id        (integer)
+      payment_description (varchar 1024)
+      payment_method (varchar 32)
+      dt_created (datetime)
+      dt_updated (datetime)
+      is_allowed (boolean)
+      is_completed (boolean)
    -----------------------------------------------------------------------------------------------------
       
 4) Concept Model:
