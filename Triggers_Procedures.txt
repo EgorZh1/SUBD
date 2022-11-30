@@ -1,0 +1,92 @@
+___________________________________________________________________
+CREATE OR REPLACE FUNCTION add_to_log()
+ RETURNS TRIGGER
+ LANGUAGE PLPGSQL
+  AS $$
+  DECLARE
+     v_action varchar(30);
+     v_user   varchar(64);
+     v_retstr varchar(256);
+  BEGIN
+     IF TG_OP = 'INSERT' THEN
+       	   v_user = NEW.name;
+       	   v_action = 'Add new user ';
+           v_retstr = v_action || v_user;
+           INSERT INTO logs(text, data) values (v_retstr, NOW());
+           RETURN NEW;
+     ELSIF TG_OP = 'UPDATE' THEN
+           v_user = NEW.name;
+           v_action = 'Update user ';
+           v_retstr = v_action || v_user;
+           INSERT INTO logs(text, data) values (v_retstr, NOW());
+           RETURN NEW;
+     ELSIF TG_OP = 'DELETE' THEN
+           v_user = OLD.name;
+           v_action = 'Remove user ';
+           v_retstr = v_action || v_user;
+           INSERT INTO logs(text, data) values (v_retstr, NOW());
+           RETURN OLD;
+     END IF;
+ END;$$
+
+CREATE TRIGGER trg_user
+ AFTER INSERT OR UPDATE OR DELETE
+   ON _user FOR EACH ROW
+     EXECUTE FUNCTION add_to_log();
+
+------------------------------------------------------------
+INSERT INTO _user(	
+	role_id,
+	status_id,   
+	first_name,
+	last_name,
+	email,
+	user_password,
+	address, 
+	dt_created,
+	dt_updated,
+	is_active)
+	
+	VALUES (
+		3,
+		2,
+		'Zheka',
+		'Popska', 
+		'popska@gmail.com',
+		'Zhepop',
+		'New-York',
+		CURRENT_TIMESTAMP,
+		CURRENT_TIMESTAMP, 
+		true
+	);
+
+UPDATE _user set (first_name = 'Ezhik', last_name = 'Grookli') where (email = 'popska@gmail.com', user_password = 'Zhepop');
+
+SELECT * FROM _user
+SELECT * FROM logs
+_________________________________________________________
+_________________________________________________________
+CREATE OR REPLACE PROCEDURE ProductPriceChange(
+    ProdName varchar,
+    amount int,
+    control varchar,
+)
+LANGUAGE PLPGSQL
+ AS $$
+ BEGIN
+    IF control = 'UP' THEN
+    	UPDATE product
+    	SET product_price = OLD.product_price + amount
+    	WHERE product_name = ProdName;
+    ELSIF control = 'DOWN' THEN
+	UPDATE product
+   	SET product_price = OLD.product_price - amount
+    	WHERE product_name = ProdName;
+    END IF;
+    COMMIT;
+ END;$$
+----------------------------------------------------------
+
+call ProductPriceChange('Verna', 20, 'UP');
+call ProductPriceChange('Verna', 20, 'DOWN');
+__________________________________________________________
